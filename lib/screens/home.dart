@@ -1,9 +1,12 @@
-import 'dart:math';
 import 'package:apptest/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:apptest/widgets/todo_item.dart';
+import 'package:apptest/model/todo.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
+
+  final todosList = Todo.todolist();
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +14,28 @@ class Home extends StatelessWidget {
       backgroundColor: tdBGColor,
       appBar: _buildAppBar(),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Column(
           children: [
             searchBox(),
+            Expanded(
+              child: ListView(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 50, bottom: 20),
+                    child: Text(
+                      'ALL ToDos',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  for (Todo todo in todosList)
+                    ToDoItem(
+                      todo: todo,
+                    ),
+                ],
+              ),
+            )
           ],
         ),
       ),
